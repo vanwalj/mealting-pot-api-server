@@ -1,7 +1,14 @@
 #!/usr/bin/env node --harmony
 
-const debugLog = require('../lib/debug-log');
+const co    = require('co');
 
-require('../').listen(process.env.PORT, function () {
+const debugLog  = require('../lib/debug-log');
+const models    = require('../models');
+const app       = require('../')
+
+co(function *() {
+    yield models.sequelize.sync({ force: true });
+    app.listen(process.env.PORT);
     debugLog.http('Listening on', process.env.PORT);
-});
+})
+    .catch(console.error);

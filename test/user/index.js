@@ -3,6 +3,6 @@
  */
 'use strict';
 
-describe('Test suite', function () {
-    require('./user');
+describe('User', function () {
+    require('./register');
 });
