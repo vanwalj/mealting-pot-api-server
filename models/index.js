@@ -12,8 +12,7 @@ const sequelize = new Sequelize(process.env.PG_URI, {
 });
 
 var db = {
-    User: sequelize.import('./user'),
-    EmailAuth: sequelize.import('./email-auth')
+    User: sequelize.import('./user')
 };
 
 Object.keys(db).forEach(function (modelName) {
