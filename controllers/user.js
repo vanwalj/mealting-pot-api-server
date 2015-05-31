@@ -20,9 +20,6 @@ module.exports.register = function *register(next) {
         this.body   = user.get();
         yield next;
     } catch (e) {
-
-        console.log('Travis', e);
-
         transaction.rollback();
         this.throw(500);
     }
