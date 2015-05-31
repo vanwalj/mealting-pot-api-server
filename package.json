@@ -4,8 +4,8 @@
   "description": "Mealting Pot API Server",
   "main": "index.js",
   "scripts": {
-    "start": "bin/www",
-    "test": "mocha"
+    "start": "node --harmony bin/www",
+    "test": "mocha --harmony"
   },
   "engines": {
     "node": "0.12.4"
