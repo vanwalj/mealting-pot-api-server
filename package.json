@@ -1,0 +1,23 @@
+{
+  "name": "mealting-pot-api-server",
+  "version": "1.0.0",
+  "description": "Mealting Pot API Server",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vanwalj/mealting-pot-api-server.git"
+  },
+  "keywords": [
+    "API",
+    "Server"
+  ],
+  "author": "Jordan Van Walleghem <j.vanwall@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vanwalj/mealting-pot-api-server/issues"
+  },
+  "homepage": "https://github.com/vanwalj/mealting-pot-api-server#readme"
+}
