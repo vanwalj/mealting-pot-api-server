@@ -5,9 +5,16 @@
 
 const hippie    = require('hippie');
 
-const app   = require('../../');
+const app       = require('../../');
+const models    = require('../../models');
 
 describe('Register', function () {
+
+    beforeEach(function (done) {
+        models.sequelize.sync({ force: true })
+            .then(function () { done() });
+    });
+
     it('create a new user', function (done) {
         hippie(app)
             .post('/users/register')
