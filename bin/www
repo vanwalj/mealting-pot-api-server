@@ -1,0 +1,7 @@
+#!/usr/bin/env node --harmony
+
+const debugLog = require('../lib/debug-log');
+
+require('../').listen(process.env.PORT, function () {
+    debugLog.http('Listening on', process.env.PORT);
+});
