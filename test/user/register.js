@@ -15,15 +15,27 @@ describe('Register', function () {
             .then(function () { done() });
     });
 
+    it('send a too short password', function (done) {
+        hippie(app)
+            .post('/users/register')
+            .json()
+            .send({
+                email: 'email@gmail.com',
+                password: 'cool'
+            })
+            .expectStatus(400)
+            .end(done);
+    });
+
     it('create a new user', function (done) {
         hippie(app)
             .post('/users/register')
             .json()
             .send({
-                email: 'j.vanwall@gmail.com',
+                email: 'email@gmail.com',
                 password: 'YOLO4242'
             })
             .expectStatus(201)
-            .end(done)
+            .end(done);
     });
 });
