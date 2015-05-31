@@ -12,7 +12,7 @@ const router    = Router();
 
 router.route({
     method: 'POST',
-    path: '/users/register',
+    path: '/users',
     validate: {
         type: 'json',
         body: {

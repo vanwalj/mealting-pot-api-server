@@ -17,7 +17,7 @@ describe('Register', function () {
 
     it('send a too short password', function (done) {
         hippie(app)
-            .post('/users/register')
+            .post('/users')
             .json()
             .send({
                 email: 'email@gmail.com',
@@ -29,7 +29,7 @@ describe('Register', function () {
 
     it('create a new user', function (done) {
         hippie(app)
-            .post('/users/register')
+            .post('/users')
             .json()
             .send({
                 email: 'email@gmail.com',

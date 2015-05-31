@@ -12,7 +12,6 @@ module.exports.register = function *register(next) {
 
     try {
         const user = yield models.User.create(this.request.body, { transaction: transaction });
-        yield models.EmailAuth.create(_.extend({}, this.request.body, { userId: user.id }), { transaction: transaction });
 
         transaction.commit();
 

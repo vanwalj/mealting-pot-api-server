@@ -3,6 +3,9 @@
  */
 'use strict';
 
+const Promise   = require('bluebird');
+const bcrypt    = Promise.promisifyAll(require('bcrypt'));
+
 module.exports = function (sequelize, DataTypes) {
     const User = sequelize.define('user', {
         id: {
@@ -13,11 +16,25 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false,
             validate: { isEmail: true }
+        },
+        _password: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            get: undefined,
+            set: undefined
+        },
+        password: {
+            type: DataTypes.VIRTUAL,
+            get: undefined,
+            set: function (v) {
+                this.setDataValue('_password', bcrypt.hashSync(v, 12));
+            }
         }
     }, {
-        classMethods: {
-            associate: function (models) {
-                User.hasOne(models.EmailAuth, { onDelete: 'CASCADE' })
+        classMethods: {},
+        instanceMethods: {
+            comparePassword: function (password) {
+                return bcrypt.compareAsync(this._password, password);
             }
         }
     });

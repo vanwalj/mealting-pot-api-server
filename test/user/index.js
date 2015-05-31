@@ -4,5 +4,5 @@
 'use strict';
 
 describe('User', function () {
-    require('./register');
+    require('./post');
 });
