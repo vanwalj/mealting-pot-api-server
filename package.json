@@ -1,11 +1,12 @@
 {
   "name": "mealting-pot-api-server",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Mealting Pot API Server",
   "main": "index.js",
   "scripts": {
-    "start": "node --harmony bin/www",
-    "test": "mocha --harmony"
+    "doc": "apidoc -i ./routes -o ./doc",
+    "test": "mocha --harmony",
+    "start": "node --harmony bin/www"
   },
   "engines": {
     "node": "0.12.4"
@@ -23,6 +24,11 @@
   "bugs": {
     "url": "https://github.com/vanwalj/mealting-pot-api-server/issues"
   },
+  "apidoc": {
+    "title": "MP API Doc",
+    "url": "https://mealting-pot.herokuapp.com",
+    "sampleUrl": "https://mealting-pot.herokuapp.com"
+  },
   "homepage": "https://github.com/vanwalj/mealting-pot-api-server#readme",
   "dependencies": {
     "bcrypt": "^0.8.3",
@@ -38,6 +44,7 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
+    "apidoc": "^0.13.1",
     "chai": "^2.3.0",
     "hippie": "^0.3.0",
     "mocha": "^2.2.5"
