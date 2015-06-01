@@ -8,19 +8,16 @@ const _ = require('underscore');
 const models    = require('../models');
 
 module.exports.register = function *register(next) {
-    const transaction = yield models.sequelize.transaction();
-
     try {
-        const user = yield models.User.create(this.request.body, { transaction: transaction });
-
-        transaction.commit();
+        const user = yield models.User.create(this.request.body);
 
         this.status = 201;
         this.body   = user.get();
+
         yield next;
     } catch (e) {
-        transaction.rollback();
         this.assert(e.name !== 'SequelizeValidationError', 400, e.message);
+        this.assert(e.name !== 'SequelizeUniqueConstraintError', 409, e.message);
         throw e;
     }
 };
