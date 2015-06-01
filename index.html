@@ -1,10 +1,230 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
+<head>
+    <link rel="stylesheet" href="main.css">
     <meta charset="UTF-8">
-    <title></title>
+    <title>Mealting Pot</title>
 </head>
 <body>
-    Hello world
+<div class="container">
+    <h1>Mealting Pot</h1>
+<p></p>
+
+<h2>Summary</h2>
+<table class="table table-bordered table-condensed swagger--summary">
+    <thead>
+    <tr>
+        <th>Path</th>
+        <th>Method</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+            <tr>
+                    <td class="swagger--summary-path" rowspan="1">
+                        <a href="#method-/users">/users</a>
+                    </td>
+                <td>
+                    <a href="#method-/users-post">POST</a>
+                </td>
+                <td>
+                    
+                </td>
+            </tr>
+    </tbody>
+</table>
+
+
+
+<h2>Paths</h2>
+
+    
+<span id="method-/users"></span>
+    <div class="swagger--panel-method-post panel">
+    <div class="panel-heading">
+        <div class="method-summary"></div>
+        <h3 id="method-/users-post" class="panel-title"><span class="method-name">POST</span> <strong>/users</strong></h3>
+    </div>
+    <div class="panel-body">
+        <section class="sw-method-description">
+            
+        </section>
+        
+        
+    <section class="sw-request-params">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="sw-param-name"></th>
+                <th class="sw-param-description"></th>
+                <th class="sw-param-type"></th>
+                <th class="sw-param-data-type"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>email
+                            <span class="json-property-required"></span>
+                        </td>
+                    <td></td>
+                    <td>formData</td>
+                    <td>
+                        <span class="json-property-type">
+        string
+</span>
+    <span class="json-property-format">(email)</span>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>password
+                            <span class="json-property-required"></span>
+                        </td>
+                    <td></td>
+                    <td>formData</td>
+                    <td>
+                        <span class="json-property-type">
+        string
+</span>
+    <span class="json-property-format">(password)</span>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+        
+    <section class="sw-response-body">
+        <p></p>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="sw-response-code"></th>
+                <th class="sw-response-description"></th>
+                <th class="sw-response-data-type hidden-xs hidden-sm"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>201</td>
+                    <td>
+                        <div class="sw-response-description-text">
+                            User successfully created.
+                        </div>
+                        <section class="visible-xs visible-sm">
+                            
+    <div class="panel panel-definition">
+    <div class="panel-body">
+            <a class="json-schema-ref" href="#/definitions/User">User</a>
+
+    </div>
+</div>                        </section>
+                    </td>
+                    <td class="hidden-xs hidden-sm">
+    <div class="panel panel-definition">
+    <div class="panel-body">
+            <a class="json-schema-ref" href="#/definitions/User">User</a>
+
+    </div>
+</div></td>
+                </tr>
+                <tr>
+                    <td>400</td>
+                    <td>
+                        <div class="sw-response-description-text">
+                            Bad request
+                        </div>
+                        <section class="visible-xs visible-sm">
+                            
+                        </section>
+                    </td>
+                    <td class="hidden-xs hidden-sm">
+</td>
+                </tr>
+                <tr>
+                    <td>409</td>
+                    <td>
+                        <div class="sw-response-description-text">
+                            Email already registered.
+                        </div>
+                        <section class="visible-xs visible-sm">
+                            
+                        </section>
+                    </td>
+                    <td class="hidden-xs hidden-sm">
+</td>
+                </tr>
+                <tr>
+                    <td>500</td>
+                    <td>
+                        <div class="sw-response-description-text">
+                            Internal server error.
+                        </div>
+                        <section class="visible-xs visible-sm">
+                            
+                        </section>
+                    </td>
+                    <td class="hidden-xs hidden-sm">
+</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+            </div>
+</div>
+
+<h2>Definitions</h2>
+
+    
+    <div class="panel panel-definition">
+        <div class="panel-heading">
+                <h3 class="panel-title"><a name="/definitions/User"></a>User:
+                    <span class="json-property-type"><span class="json-property-type">
+        object
+</span>
+
+</span>
+                </h3>
+        </div>
+    <div class="panel-body">
+            <section class="json-schema-properties">
+    <dl>
+            <dt>
+                <span class="json-property-name">email:</span>
+                <span class="json-property-type">
+        string
+</span>
+    <span class="json-property-format">(string)</span>
+
+                    <span class="json-property-required"></span>
+            </dt>
+            <dd>
+                
+                <div class="json-inner-schema">
+                    
+                </div>
+            </dd>
+            <dt>
+                <span class="json-property-name">password:</span>
+                <span class="json-property-type">
+        string
+</span>
+    <span class="json-property-format">(password)</span>
+
+                    <span class="json-property-required"></span>
+            </dt>
+            <dd>
+                
+                <div class="json-inner-schema">
+                    
+                </div>
+            </dd>
+    </dl>
+</section>
+
+    </div>
+</div></div>
 </body>
 </html>

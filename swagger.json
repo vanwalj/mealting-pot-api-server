@@ -1,0 +1,75 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Mealting Pot",
+        "version": "1.0.0"
+    },
+    "host": "mealting-pot.herokuapp.com",
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json; charset=utf-8"
+    ],
+    "paths": {
+        "/users": {
+            "post": {
+                "parameters": [
+                    {
+                        "in": "formData",
+                        "name": "email",
+                        "type": "string",
+                        "format": "email",
+                        "required": true
+                    },
+                    {
+                        "in": "formData",
+                        "name": "password",
+                        "type": "string",
+                        "format": "password",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "User successfully created.",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "409": {
+                        "description": "Email already registered."
+                    },
+                    "500": {
+                        "description": "Internal server error."
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "User": {
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "format": "string"
+                },
+                "password": {
+                    "type": "string",
+                    "format": "password"
+                }
+            }
+        }
+    }
+}
