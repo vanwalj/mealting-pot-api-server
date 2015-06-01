@@ -20,6 +20,7 @@ module.exports.register = function *register(next) {
         yield next;
     } catch (e) {
         transaction.rollback();
-        this.throw(500);
+        this.assert(e.name !== 'SequelizeValidationError', 400, e.message);
+        throw e;
     }
 };

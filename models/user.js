@@ -10,31 +10,26 @@ module.exports = function (sequelize, DataTypes) {
     const User = sequelize.define('user', {
         id: {
             type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4
+            defaultValue: DataTypes.UUIDV4,
+            set: () => undefined
         },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: { isEmail: true }
         },
-        _password: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            get: undefined,
-            set: undefined
-        },
         password: {
             type: DataTypes.VIRTUAL,
-            get: undefined,
+            get: () => undefined,
             set: function (v) {
-                this.setDataValue('_password', bcrypt.hashSync(v, 12));
+                this.setDataValue('password', bcrypt.hashSync(v, 12));
             }
         }
     }, {
         classMethods: {},
         instanceMethods: {
             comparePassword: function (password) {
-                return bcrypt.compareAsync(this._password, password);
+                return bcrypt.compareAsync(this.password, password);
             }
         }
     });
