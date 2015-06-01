@@ -11,10 +11,12 @@ const userController    = require('../controllers/user');
 const router    = Router();
 
 /**
- * @api {get} /users/:id
+ * @api {get} /users/:id Get a user by id
  * @apiVersion 0.1.0
  * @apiName GetUser
  * @apiGroup User
+ * @apiPermission loggedIn
+ * @apiUse loggedIn
  *
  * @apiParam {String} id User unique id.
  *
@@ -27,6 +29,19 @@ const router    = Router();
  *
  * @apiError (404) NotFound User with the requested id not found.
  */
+router.route({
+    method: 'GET',
+    path: '/users/:userId',
+    validate: {
+        header: {
+            Authorisation: Joi.string().regex(/Bearer \w*/).required()
+        },
+        params: {
+            userId: Joi.string().guid().required()
+        }
+    },
+    handler: userController.getUser
+});
 
 /**
  * @api {post} /users Register a new user
@@ -62,8 +77,8 @@ router.route({
     validate: {
         type: 'json',
         body: {
-            email: Joi.string().email(),
-            password: Joi.string().min(6)
+            email: Joi.string().email().required(),
+            password: Joi.string().min(6).required()
         }
     },
     handler: userController.register

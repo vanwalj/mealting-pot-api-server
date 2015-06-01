@@ -21,3 +21,17 @@ module.exports.register = function *register(next) {
         throw e;
     }
 };
+
+module.exports.getUser = function *getUser(next) {
+    let user = models.User.findOne({
+        where: { id: this.params.userId },
+        attributes: ['id']
+    });
+
+    this.assert(user, 404, 'User not found');
+
+    this.status = 200;
+    this.body   = user.get();
+
+    yield next;
+};
