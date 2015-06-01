@@ -16,8 +16,6 @@ app.use(httpLogger);
 app.use(errCatcher);
 app.use(cors);
 
-routes.forEach(function (route) {
-    app.use(route);
-});
+routes.forEach((route) => app.use(route));
 
 module.exports = app;
