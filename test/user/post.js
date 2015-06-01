@@ -49,19 +49,25 @@ describe('Register', function () {
     });
 
     it('send two time the same email', function (done) {
-        const repeat = hippie(app)
-            .post('/users')
-            .json()
-            .send({
-                email: 'email@gmail.com',
-                password: 'YOLO4242'
-            });
 
-        repeat.expectStatus(201)
+        function repeat () {
+            return hippie(app)
+                .post('/users')
+                .json()
+                .send({
+                    email: 'email@gmail.com',
+                    password: 'YOLO4242'
+                });
+        }
+
+        repeat()
+            .expectStatus(201)
             .end(function (err) {
                 if (err) return done(err);
-                repeat.expectStatus(401).end(done);
-            })
+                repeat()
+                    .expectStatus(409)
+                    .end(done);
+            });
     });
 
     it('create a new user', function (done) {
