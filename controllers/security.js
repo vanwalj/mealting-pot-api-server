@@ -18,7 +18,7 @@ module.exports.basicAuth = function *basicAuth(next) {
     const rMatch = /Basic (\S*)/.exec(authorizationHeader);
     this.assert(rMatch, 401, 'Authorization header wrong format');
 
-    const aMatch = /(.*):(.*)/.exec(new Buffer(rMatch[1], 'base64').toString());
+    const aMatch = /(.*):(.*)/.exec((new Buffer(rMatch[1], 'base64')).toString());
     this.assert(aMatch, 401, 'Authorization token wrong format');
 
     const user = yield models.User.findOne({ where: { email: aMatch[1] } });
