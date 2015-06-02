@@ -5,6 +5,7 @@
 
 const koa   = require('koa');
 
+const responseTime  = require('./lib/response-time');
 const httpLogger    = require('./lib/http-logger');
 const errCatcher    = require('./lib/err-catcher');
 const cors          = require('./lib/cors');
@@ -12,6 +13,7 @@ const routes        = require('./routes');
 
 const app   = koa();
 
+app.use(responseTime);
 app.use(httpLogger);
 app.use(errCatcher);
 app.use(cors);
