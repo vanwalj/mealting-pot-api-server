@@ -27,7 +27,7 @@ module.exports.getToken = function *getToken(next) {
             id: this.state.user.id
         }
     }, privateKey, {
-        algorithm: 'RS384',
+        algorithm: 'RS512',
         issuer: 'urn:mealting-pot-api-server:get-token'
     });
 
