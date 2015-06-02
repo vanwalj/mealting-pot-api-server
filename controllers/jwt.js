@@ -3,12 +3,16 @@
  */
 'use strict';
 
-const jwt   = require('jsonwebtoken');
+const jwt       = require('jsonwebtoken');
+const Promise   = require('bluebird');
+const fs        = Promise.promisifyAll(require('fs'));
+
+const formatKey = require('../lib/format-key');
 
 module.exports.getPublicKey = function *getPublicKey(next) {
     this.status = 200;
     this.body   = {
-        public_key: process.env.JWT_PUBLIC
+        public_key: formatKey(process.env.JWT_PUBLIC)
     };
 
     yield next;
@@ -19,7 +23,7 @@ module.exports.getToken = function *getToken(next) {
         user: {
             id: this.state.user.id
         }
-    }, process.env.JWT_SECRET, {
+    }, formatKey(process.env.JWT_SECRET), {
         algorithm: 'RS384',
         issuer: 'urn:mealting-pot-api-server:get-token'
     });

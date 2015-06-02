@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "doc": "apidoc -i ./routes -o ./doc",
-    "test": "mocha --harmony",
+    "test": "mocha --harmony --require co-mocha",
     "start": "node --harmony bin/www"
   },
   "engines": {
@@ -46,6 +46,7 @@
   "devDependencies": {
     "apidoc": "^0.13.1",
     "chai": "^2.3.0",
+    "co-mocha": "^1.1.0",
     "hippie": "^0.3.0",
     "mocha": "^2.2.5"
   }

@@ -20,7 +20,7 @@ module.exports = function (sequelize, DataTypes) {
             validate: { isEmail: true }
         },
         password: {
-            type: DataTypes.VIRTUAL,
+            type: DataTypes.STRING,
             get: () => undefined,
             set: function (v) {
                 this.setDataValue('password', bcrypt.hashSync(v, 12));
@@ -30,7 +30,7 @@ module.exports = function (sequelize, DataTypes) {
         classMethods: {},
         instanceMethods: {
             comparePassword: function (password) {
-                return bcrypt.compareAsync(this.password, password);
+                return bcrypt.compareAsync(password, this.getDataValue('password'));
             }
         }
     });

@@ -5,4 +5,5 @@
 
 describe('Test suite', function () {
     require('./user');
+    require('./jwt');
 });

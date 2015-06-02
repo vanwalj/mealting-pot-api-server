@@ -3,6 +3,6 @@
  */
 'use strict';
 
-describe('User', function () {
+describe('user', function () {
     require('./post');
 });
