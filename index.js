@@ -13,8 +13,8 @@ const routes        = require('./routes');
 
 const app   = koa();
 
-app.use(responseTime);
 app.use(httpLogger);
+app.use(responseTime);
 app.use(errCatcher);
 app.use(cors);
 

@@ -12,18 +12,19 @@ const formatKey = require('../lib/format-key');
 const publicKey    = formatKey(process.env.JWT_PUBLIC);
 
 module.exports.basicAuth = function *basicAuth(next) {
-    this.assert(this.get('Authorization'), 401, 'Authorization header not set');
+    const authorizationHeader = this.get('Authorization');
+    this.assert(authorizationHeader, 401, 'Authorization header not set');
 
-    let rMatch = /Basic (\S*)/.exec(this.get('Authorization'));
+    const rMatch = /Basic (\S*)/.exec(authorizationHeader);
     this.assert(rMatch, 401, 'Authorization header wrong format');
 
-    let aMatch = /(.*):(.*)/.exec(new Buffer(rMatch[1], 'base64').toString());
+    const aMatch = /(.*):(.*)/.exec(new Buffer(rMatch[1], 'base64').toString());
     this.assert(aMatch, 401, 'Authorization token wrong format');
 
-    let user = yield models.User.findOne({ where: { email: aMatch[1] } });
+    const user = yield models.User.findOne({ where: { email: aMatch[1] } });
     this.assert(user, 401, 'Email does not exist');
 
-    let auth = yield user.comparePassword(aMatch[2]);
+    const auth = yield user.comparePassword(aMatch[2]);
     this.assert(auth, 401, 'Wrong password');
 
     this.state.user = user;
@@ -32,9 +33,10 @@ module.exports.basicAuth = function *basicAuth(next) {
 };
 
 module.exports.bearerAuth = function *bearerAuth(next) {
-    this.assert(this.get('Authorization'), 401, 'Authorization header not set');
+    const authorizationHeader = this.get('Authorization');
+    this.assert(authorizationHeader, 401, 'Authorization header not set');
 
-    let rMatch = /Bearer (\S*)/.exec(this.get('Authorization'));
+    const rMatch = /Bearer (\S*)/.exec(this.get('Authorization'));
     this.assert(rMatch, 401, 'Authorization header wrong format');
 
     try {
@@ -46,7 +48,7 @@ module.exports.bearerAuth = function *bearerAuth(next) {
         this.throw(401, e)
     }
 
-    let user = models.User.findOne({ where: { id: this.state.jwt.user.id } });
+    const user = models.User.findOne({ where: { id: this.state.jwt.user.id } });
     this.assert(user, 401, 'Corrupted bearer token');
 
     this.state.user = user;
