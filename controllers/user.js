@@ -23,7 +23,7 @@ module.exports.register = function *register(next) {
 };
 
 module.exports.getUser = function *getUser(next) {
-    let user = models.User.findOne({
+    let user = yield models.User.findOne({
         where: { id: this.params.userId },
         attributes: ['id']
     });

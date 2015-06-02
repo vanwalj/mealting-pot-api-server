@@ -6,7 +6,8 @@
 const Router    = require('koa-joi-router');
 const Joi       = require('joi');
 
-const userController    = require('../controllers/user');
+const userController        = require('../controllers/user');
+const securityController    = require('../controllers/security');
 
 const router    = Router();
 
@@ -33,14 +34,14 @@ router.route({
     method: 'GET',
     path: '/users/:userId',
     validate: {
-        header: {
-            Authorization: Joi.string().regex(/Bearer \S*/).required()
-        },
         params: {
             userId: Joi.string().guid().required()
         }
     },
-    handler: userController.getUser
+    handler: [
+        securityController.bearerAuth,
+        userController.getUser
+    ]
 });
 
 /**

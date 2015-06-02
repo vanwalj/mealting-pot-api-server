@@ -5,4 +5,5 @@
 
 describe('user', function () {
     require('./post');
+    require('./get');
 });

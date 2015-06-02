@@ -9,10 +9,13 @@ const fs        = Promise.promisifyAll(require('fs'));
 
 const formatKey = require('../lib/format-key');
 
+const privateKey    = formatKey(process.env.JWT_SECRET);
+const publicKey     = formatKey(process.env.JWT_PUBLIC);
+
 module.exports.getPublicKey = function *getPublicKey(next) {
     this.status = 200;
     this.body   = {
-        public_key: formatKey(process.env.JWT_PUBLIC)
+        public_key: publicKey
     };
 
     yield next;
@@ -23,7 +26,7 @@ module.exports.getToken = function *getToken(next) {
         user: {
             id: this.state.user.id
         }
-    }, formatKey(process.env.JWT_SECRET), {
+    }, privateKey, {
         algorithm: 'RS384',
         issuer: 'urn:mealting-pot-api-server:get-token'
     });
