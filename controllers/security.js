@@ -39,7 +39,7 @@ module.exports.bearerAuth = function *bearerAuth(next) {
 
     try {
         this.state.jwt = yield jwt.verifyAsync(rMatch[1], publicKey, {
-            algorithms: ['RS384'],
+            algorithms: ['RS512'],
             issuer: 'urn:mealting-pot-api-server:get-token'
         });
     } catch (e) {
