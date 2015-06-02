@@ -34,7 +34,7 @@ router.route({
     path: '/users/:userId',
     validate: {
         header: {
-            Authorisation: Joi.string().regex(/Bearer \w*/).required()
+            Authorization: Joi.string().regex(/Bearer \S*/).required()
         },
         params: {
             userId: Joi.string().guid().required()

@@ -15,6 +15,19 @@
  * @apiError (403) Forbidden Insufficient permissions.
  */
 
+/**
+ * @apiDefine basicAuth Client should auth via basic http auth containing email and password.
+ * @apiHeader (Auth) {String} Authorisation should contain the email and password, like `"Basic " + base64encode(email + ":" password)` (see examples).
+ * @apiHeaderExample {json} Header-Example:
+ *      {
+ *          "Authorisation": "Basic am9obkBkb2UuY29tOnNlY3VyZWRfcGFzc3dvcmQ="
+ *      }
+ *
+ * @apiError (401) Unauthorized Basic authorization header is wrong or not set.
+ * @apiError (403) Forbidden Insufficient permissions.
+ */
+
 module.exports = [
-    require('./users').middleware()
+    require('./users').middleware(),
+    require('./jwt').middleware()
 ];
