@@ -48,11 +48,10 @@ module.exports.bearerAuth = function *bearerAuth(next) {
         this.throw(401, e)
     }
 
-    const user = models.User.findOne({ where: { id: this.state.jwt.user.id } });
+    const user = yield models.User.findOne({ where: { id: this.state.jwt.user.id } });
     this.assert(user, 401, 'Corrupted bearer token');
 
     this.state.user = user;
 
     yield next;
-
 };

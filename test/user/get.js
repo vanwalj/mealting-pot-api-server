@@ -7,6 +7,7 @@ const hippie    = require('hippie');
 
 const app           = require('../../');
 const models        = require('../../models');
+const createUser   = require('../lib/create-user');
 const createToken   = require('../lib/create-token');
 
 describe('Get a user by id', function () {
@@ -20,7 +21,7 @@ describe('Get a user by id', function () {
 
     it('send no authorization header', function *(done) {
 
-        let user = yield models.User.create({ email: 'john@doe.com' });
+        let user = yield createUser();
 
         hippie(app)
             .get('/users/' + user.id)
@@ -31,25 +32,26 @@ describe('Get a user by id', function () {
 
     it('request a non existing user', function *(done) {
 
-        let inf = yield createToken();
+        let token = yield createToken();
 
         hippie(app)
             .get('/users/3F2504E0-4F89-11D3-9A0C-0305E82C3301')
             .json()
             .expectStatus(404)
-            .header('Authorization', 'Bearer ' + inf.token)
+            .header('Authorization', 'Bearer ' + token)
             .end(done);
     });
 
     it('work', function *(done) {
 
-        let inf = yield createToken();
+        let user    = yield createUser();
+        let token   = yield createToken(user);
 
         hippie(app)
-            .get('/users/' + inf.user.id)
+            .get('/users/' + user.id)
             .json()
             .expectStatus(200)
-            .header('Authorization', 'Bearer ' + inf.token)
+            .header('Authorization', 'Bearer ' + token)
             .end(done);
     });
 

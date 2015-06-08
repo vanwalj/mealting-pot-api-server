@@ -35,3 +35,31 @@ module.exports.getUser = function *getUser(next) {
 
     yield next;
 };
+
+module.exports.update = function *update(next) {
+
+    if (this.request.body.email === this.state.user.email) {
+        delete this.request.body.email;
+    }
+
+    try {
+        yield this.state.user.update(this.request.body);
+    } catch (e) {
+        this.assert(e.name !== 'SequelizeValidationError', 400, e.message);
+        this.assert(e.name !== 'SequelizeUniqueConstraintError', 409, e.message);
+        throw e;
+    }
+
+    this.status = 200;
+    this.body   = this.state.user;
+
+    yield next;
+};
+
+module.exports.destroy = function *destroy(next) {
+    yield this.state.user.destroy();
+
+    this.status = 204;
+
+    yield next;
+};

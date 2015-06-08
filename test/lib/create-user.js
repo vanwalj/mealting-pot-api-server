@@ -5,11 +5,23 @@
 
 const _ = require('underscore');
 
-const models    = require('../../models');
+const models            = require('../../models');
+const userController    = require('../../controllers/user');
+const controllerSC      = require('../lib/controller-short-circuit');
 
-module.exports = function createUser(opts) {
-    return models.User.create(_.extend({
+module.exports = function *createUser(opts) {
+    opts = opts || {
         email: 'john@doe.com',
         password: '___h4x0r'
-    }, opts));
+    };
+
+    let ctx = {
+        request: {
+            body: opts
+        }
+    };
+
+    yield controllerSC(userController.register, ctx);
+
+    return ctx.body;
 };

@@ -5,5 +5,7 @@
 
 describe('user', function () {
     require('./post');
+    require('./put');
     require('./get');
+    require('./delete');
 });

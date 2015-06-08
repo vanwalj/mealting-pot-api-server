@@ -7,17 +7,13 @@ const co    = require('co');
 
 const createUser        = require('./create-user');
 const jwtController     = require('../../controllers/jwt');
+const controllerSC      = require('../lib/controller-short-circuit');
 
 module.exports = function *createToken(user) {
     if (!user) user = yield createUser();
 
-    let fn = co.wrap(jwtController.getToken);
-
     let ctx = { state: { user: user }};
-    yield fn.call(ctx, function *() {});
+    yield controllerSC(jwtController.getToken, ctx);
 
-    return {
-        user: user,
-        token: ctx.body.access_token
-    };
+    return ctx.body.access_token;
 };

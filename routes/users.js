@@ -85,4 +85,71 @@ router.route({
     handler: userController.register
 });
 
+/**
+ * @api {put} /users Edit user informations
+ * @apiVersion 0.1.0
+ * @apiName PutUser
+ * @apiGroup User
+ * @apiPermission loggedIn
+ * @apiUse loggedIn
+ *
+ * @apiParam {String} email User email, must be a valid email or will throw a 400.
+ * @apiParam {String{6..}} password User password, must be at least 6 character long.
+ *
+ * @apiParamExample {json} Request-Example:
+ *      {
+ *          "email": "john@doe.com",
+ *          "password": "really secured"
+ *      }
+ *
+ * @apiSuccess (200) {String} id id of the User.
+ * @apiSuccess (200) {String} email Email of the User.
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 201 Created
+ *      {
+ *          "id": "2676a6fd-a734-4639-a5cb-1f78e03fae2c",
+ *          "email": "john@doe.com"
+ *      }
+ *
+ * @apiError (400) BadRequest Client error, more details within the response body.
+ * @apiError (409) Conflict Email already registered.
+ */
+router.route({
+    method: 'PUT',
+    path: '/users',
+    validate: {
+        type: 'json',
+        body: {
+            email: Joi.string().email(),
+            password: Joi.string().min(6)
+        }
+    },
+    handler: [
+        securityController.bearerAuth,
+        userController.update
+    ]
+});
+
+/**
+ * @api {delete} /users Delete user account
+ * @apiVersion 0.1.0
+ * @apiName DeleteUser
+ * @apiGroup User
+ * @apiPermission loggedIn
+ * @apiUse loggedIn
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 204 Empty Response
+ *
+ */
+router.route({
+    method: 'DELETE',
+    path: '/users',
+    handler: [
+        securityController.bearerAuth,
+        userController.destroy
+    ]
+});
+
 module.exports = router;
