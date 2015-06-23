@@ -3,6 +3,6 @@
  */
 
 describe('meal', function () {
-    //require('./get');
+    require('./get');
     require('./post');
 });
