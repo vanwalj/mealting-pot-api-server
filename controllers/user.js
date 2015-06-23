@@ -22,16 +22,22 @@ module.exports.register = function *register(next) {
     }
 };
 
+module.exports.getMe = function *getMe(next) {
+
+    this.body = this.state.user.get();
+
+    yield next;
+};
+
 module.exports.getUser = function *getUser(next) {
     let user = yield models.User.findOne({
         where: { id: this.params.userId },
-        attributes: ['id']
+        attributes: ['id', 'firstName']
     });
 
     this.assert(user, 404, 'User not found');
 
-    this.status = 200;
-    this.body   = user.get();
+    this.body = user.get();
 
     yield next;
 };
@@ -50,7 +56,6 @@ module.exports.update = function *update(next) {
         throw e;
     }
 
-    this.status = 200;
     this.body   = this.state.user;
 
     yield next;
@@ -60,6 +65,22 @@ module.exports.destroy = function *destroy(next) {
     yield this.state.user.destroy();
 
     this.status = 204;
+
+    yield next;
+};
+
+module.exports.validateEmailAvailability = function *validateEmailAvailability(next) {
+    var result = yield models.User.findOne({ where: { email: this.request.body.email } });
+
+    this.body = {
+        result: !result
+    };
+
+    yield next;
+};
+
+module.exports.validatePassword = function *validatePassword(next) {
+    this.body.result = true;
 
     yield next;
 };

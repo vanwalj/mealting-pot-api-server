@@ -12,7 +12,9 @@ const controllerSC      = require('../lib/controller-short-circuit');
 module.exports = function *createUser(opts) {
     opts = opts || {
         email: 'john@doe.com',
-        password: '___h4x0r'
+        password: '___h4x0r',
+            firstName: 'John',
+            lastName: 'Doe'
     };
 
     let ctx = {

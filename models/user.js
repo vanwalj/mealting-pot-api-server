@@ -25,9 +25,21 @@ module.exports = function (sequelize, DataTypes) {
             set: function (v) {
                 this.setDataValue('password', bcrypt.hashSync(v, 12));
             }
+        },
+        firstName: {
+            allowNull: false,
+            type: DataTypes.STRING
+        },
+        lastName: {
+            allowNull: false,
+            type: DataTypes.STRING
         }
     }, {
-        classMethods: {},
+        classMethods: {
+            associate: function (db) {
+                User.hasMany(db.Meal);
+            }
+        },
         instanceMethods: {
             comparePassword: function (password) {
                 return bcrypt.compareAsync(password, this.getDataValue('password'));

@@ -32,6 +32,15 @@ const router    = Router();
  */
 router.route({
     method: 'GET',
+    path: '/users/me',
+    handler: [
+        securityController.bearerAuth,
+        userController.getMe
+    ]
+});
+
+router.route({
+    method: 'GET',
     path: '/users/:userId',
     validate: {
         params: {
@@ -41,6 +50,34 @@ router.route({
     handler: [
         securityController.bearerAuth,
         userController.getUser
+    ]
+});
+
+router.route({
+    method: 'POST',
+    path: '/users/validate/email-availability',
+    validate: {
+        type: 'json',
+        body: {
+            email: Joi.string().email().required()
+        }
+    },
+    handler: [
+        userController.validateEmailAvailability
+    ]
+});
+
+router.route({
+    method: 'POST',
+    path: '/users/validate/password',
+    validate: {
+        type: 'json',
+        body: {
+            password: Joi.string().required()
+        }
+    },
+    handler: [
+        userController.validatePassword
     ]
 });
 
@@ -79,7 +116,9 @@ router.route({
         type: 'json',
         body: {
             email: Joi.string().email().required(),
-            password: Joi.string().min(6).required()
+            password: Joi.string().min(6).required(),
+            firstName: Joi.string().required(),
+            lastName: Joi.string().required()
         }
     },
     handler: userController.register
@@ -122,7 +161,9 @@ router.route({
         type: 'json',
         body: {
             email: Joi.string().email(),
-            password: Joi.string().min(6)
+            password: Joi.string().min(6),
+            firstName: Joi.string(),
+            lastName: Joi.string()
         }
     },
     handler: [

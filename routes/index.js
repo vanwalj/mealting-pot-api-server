@@ -29,5 +29,6 @@
 
 module.exports = [
     require('./users').middleware(),
-    require('./jwt').middleware()
+    require('./jwt').middleware(),
+    require('./meals').middleware()
 ];

@@ -7,7 +7,7 @@ const hippie    = require('hippie');
 
 const app           = require('../../');
 const models        = require('../../models');
-const createUser   = require('../lib/create-user');
+const createUser    = require('../lib/create-user');
 const createToken   = require('../lib/create-token');
 
 describe('Get a user by id', function () {

@@ -4,6 +4,8 @@
 'use strict';
 
 describe('Test suite', function () {
-    require('./user');
-    require('./jwt');
+
+    //require('./user');
+    //require('./jwt');
+    require('./meal');
 });
