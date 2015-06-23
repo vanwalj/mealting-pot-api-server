@@ -9,7 +9,7 @@
     "start": "node --harmony bin/www"
   },
   "engines": {
-    "node": "0.12.4"
+    "node": "0.12.5"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,6 @@
     "Server"
   ],
   "author": "Jordan Van Walleghem <j.vanwall@gmail.com>",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/vanwalj/mealting-pot-api-server/issues"
   },
@@ -37,7 +36,7 @@
     "joi": "^6.4.3",
     "jsonwebtoken": "^5.0.1",
     "koa": "^0.21.0",
-    "koa-joi-router": "^1.3.1",
+    "koa-joi-router": "vanwalj/koa-joi-router",
     "pg": "^4.3.0",
     "pg-hstore": "^2.3.2",
     "sequelize": "^3.1.1",

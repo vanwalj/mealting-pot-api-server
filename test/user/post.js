@@ -56,6 +56,8 @@ describe('Register', function () {
                 .json()
                 .send({
                     email: 'email@gmail.com',
+                    firstName: 'Yolo',
+                    lastName: 'lfdy',
                     password: 'YOLO4242'
                 });
         }
@@ -76,6 +78,8 @@ describe('Register', function () {
             .json()
             .send({
                 email: 'email@gmail.com',
+                firstName: 'Yolo',
+                lastName: 'lfdy',
                 password: 'YOLO4242'
             })
             .expectStatus(201)

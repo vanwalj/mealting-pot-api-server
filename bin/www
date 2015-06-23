@@ -4,7 +4,7 @@ const co    = require('co');
 
 const debugLog  = require('../lib/debug-log');
 const models    = require('../models');
-const app       = require('../')
+const app       = require('../');
 
 co(function *() {
     yield models.sequelize.sync({ force: true });
