@@ -30,7 +30,7 @@ module.exports.getMeals = function *getMeals(next) {
 };
 
 module.exports.getMeal = function *getMeal(next) {
-    //todo report a bug
+    //todo report an issue @sequelize
     //this.body = yield models.Meal.findOne(this.params.mealId);
 
     try {

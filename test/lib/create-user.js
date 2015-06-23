@@ -10,12 +10,12 @@ const userController    = require('../../controllers/user');
 const controllerSC      = require('../lib/controller-short-circuit');
 
 module.exports = function *createUser(opts) {
-    opts = opts || {
+    opts = _.extend({
         email: 'john@doe.com',
         password: '___h4x0r',
-            firstName: 'John',
-            lastName: 'Doe'
-    };
+        firstName: 'John',
+        lastName: 'Doe'
+    }, opts);
 
     let ctx = {
         request: {

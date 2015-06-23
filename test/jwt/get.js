@@ -5,8 +5,9 @@
 
 const hippie    = require('hippie');
 
-const app       = require('../../');
-const models    = require('../../models');
+const app           = require('../../');
+const models        = require('../../models');
+const createUser    = require('../lib/create-user');
 
 describe('Get a jwt token', function () {
     beforeEach(function (done) {
@@ -50,7 +51,7 @@ describe('Get a jwt token', function () {
     });
 
     it('work', function *(done) {
-        yield models.User.create({ email: 'john@doe.com', password: 'Coucou42' });
+        yield createUser({ email: 'john@doe.com', password: 'Coucou42' });
         hippie(app)
             .json()
             .get('/jwt')
