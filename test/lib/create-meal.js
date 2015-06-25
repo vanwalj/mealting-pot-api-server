@@ -18,7 +18,7 @@ module.exports = function *createMeal(opts, user) {
             format: 'dinner',
             cuisine: 'french',
             price: 10,
-            date: 'today',
+            date: Date(),
             seats: 4,
             tags: 'yolo cool french'
         };
@@ -36,7 +36,11 @@ module.exports = function *createMeal(opts, user) {
         }
     };
 
-    yield controllerSC(mealCtrl.postMeal, ctx);
+    try {
+        yield controllerSC(mealCtrl.postMeal, ctx);
+    } catch (e) {
+        console.error(e.message);
+    }
 
     return ctx.body;
 };

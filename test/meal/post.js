@@ -5,8 +5,9 @@
 
 const hippie = require('hippie');
 
-const models = require('../../models');
-const app = require('../../');
+const createToken   = require('../lib/create-token');
+const models        = require('../../models');
+const app           = require('../../');
 
 describe('Post a meal', function () {
     beforeEach(function *(done) {
@@ -15,19 +16,17 @@ describe('Post a meal', function () {
     });
 
     it('should work', function *(done) {
+
+        let token   = yield createToken();
+
         hippie(app)
             .post('/meals')
+            .header('Authorization', 'Bearer ' + token)
             .json()
-            .data({
-                title: 'Ez pz',
-                description: 'Yolo',
-                location: '80 zetrei',
-                format: 'Dinner',
-                cuisine: 'Turk',
-                price: 10.99,
-                date: 'today',
-                seats: 1,
-                tags: 'Ez Pz Lmn Sqz'
+            .send({
+                title: 'Cool meal',
+                location: 'Cool place',
+                date: Date().toString()
             })
             .expectStatus(201)
             .end(done);

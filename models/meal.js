@@ -10,13 +10,22 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: DataTypes.UUIDV4,
             set: () => undefined
         },
-        title: DataTypes.STRING,
-        description: DataTypes.STRING,
-        location: DataTypes.STRING,
+        title: {
+            type: DataTypes.TEXT,
+            allowNull: false
+        },
+        description: DataTypes.TEXT,
+        location: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         format: DataTypes.STRING,
         cuisine: DataTypes.STRING,
         price: DataTypes.DECIMAL,
-        date: DataTypes.STRING,
+        date: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
         seats: DataTypes.INTEGER,
         tags: DataTypes.STRING
     }, {
