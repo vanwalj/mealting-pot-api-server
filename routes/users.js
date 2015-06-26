@@ -12,7 +12,7 @@ const securityController    = require('../controllers/security');
 const router    = Router();
 
 /**
- * @api {get} /users/:id Get a user by id
+ * @api {get} /users/me Get self
  * @apiVersion 0.1.0
  * @apiName GetUser
  * @apiGroup User
@@ -22,10 +22,16 @@ const router    = Router();
  * @apiParam {String} id User unique id.
  *
  * @apiSuccess (200) {String} id id of the User.
+ * @apiSuccess (200) {String} firstName User first name.
+ * @apiSuccess (200) {String} lastName User last name.
+ * @apiSuccess (200) {String} email User email.
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *          "id": "2676a6fd-a734-4639-a5cb-1f78e03fae2c"
+ *          "id": "2676a6fd-a734-4639-a5cb-1f78e03fae2c",
+ *          "firstName": "Marc"
+ *          "firstName": "Dutroux"
+ *          "email": "marc.dutroux@gmail.com"
  *      }
  *
  * @apiError (404) NotFound User with the requested id not found.
@@ -39,6 +45,25 @@ router.route({
     ]
 });
 
+/**
+ * @api {get} /users/:userId Get a user by id
+ * @apiVersion 0.1.0
+ * @apiName GetUser
+ * @apiGroup User
+ *
+ * @apiParam {String} userId User unique id.
+ *
+ * @apiSuccess (200) {String} id id of the User.
+ * @apiSuccess (200) {String} firstName User first name.
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "id": "2676a6fd-a734-4639-a5cb-1f78e03fae2c",
+ *          "firstName": "Marc"
+ *      }
+ *
+ * @apiError (404) NotFound User with the requested id not found.
+ */
 router.route({
     method: 'GET',
     path: '/users/:userId',
@@ -125,7 +150,7 @@ router.route({
 });
 
 /**
- * @api {put} /users Edit user informations
+ * @api {put} /users/me Edit user informations
  * @apiVersion 0.1.0
  * @apiName PutUser
  * @apiGroup User
@@ -156,7 +181,7 @@ router.route({
  */
 router.route({
     method: 'PUT',
-    path: '/users',
+    path: '/users/me',
     validate: {
         type: 'json',
         body: {
@@ -173,7 +198,7 @@ router.route({
 });
 
 /**
- * @api {delete} /users Delete user account
+ * @api {delete} /users/me Delete user account
  * @apiVersion 0.1.0
  * @apiName DeleteUser
  * @apiGroup User
@@ -186,7 +211,7 @@ router.route({
  */
 router.route({
     method: 'DELETE',
-    path: '/users',
+    path: '/users/me',
     handler: [
         securityController.bearerAuth,
         userController.destroy

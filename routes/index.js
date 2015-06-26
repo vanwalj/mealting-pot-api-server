@@ -28,7 +28,10 @@
  */
 
 module.exports = [
-    require('./users').middleware(),
+    require('./bookings').middleware(),
+    require('./dishes').middleware(),
     require('./jwt').middleware(),
-    require('./meals').middleware()
+    require('./meals').middleware(),
+    require('./reviews').middleware(),
+    require('./users').middleware()
 ];

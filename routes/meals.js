@@ -8,8 +8,69 @@ const Joi       = require('joi');
 
 const router    = Router();
 
-const secuCtrl  = require('../controllers/security');
+const secCtrl   = require('../controllers/security');
 const mealCtrl  = require('../controllers/meal');
+
+/**
+ * @api {get} /meals Get meals
+ * @apiVersion 0.1.0
+ * @apiName GetMeals
+ * @apiGroup Meal
+ *
+ * @apiParam {Number} [latitude] Search position.
+ * @apiParam {Number} [longitude] Search position.
+ * @apiParam {Number} [radius] Search radius.
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      [{
+ *          "id": "2676a6fd-a734-4639-a5cb-1f78e03fae2c"
+ *          "title": "Cool chinese breakfast",
+ *          "description": "I will cook some cool chinese breakfast !!!",
+ *          "location": {
+ *              "latitude": 42.5,
+ *              "longitude": 47.5
+ *          },
+ *          "format": "Breakfast",
+ *          "cuisine": "Continental chinese",
+ *          "price": 12.5,
+ *          "date": "AAAA-MM-JJ HH:MM:SS",
+ *          "seats": 7,
+ *          "tags": ["cool", "chinese", "hot", "salad", "waffle"],
+ *          "userId": "2676a6fd-a734-4639-a5cb-1f78e03fae2c"
+ *      }, {
+ *          "id": "2676a6fd-a734-4639-a5cb-1f78e03fae2c"
+ *          "title": "Cool chinese breakfast",
+ *          "description": "I will cook some cool chinese breakfast !!!",
+ *          "location": {
+ *              "latitude": 42.5,
+ *              "longitude": 47.5
+ *          },
+ *          "format": "Breakfast",
+ *          "cuisine": "Continental chinese",
+ *          "price": 12.5,
+ *          "date": "AAAA-MM-JJ HH:MM:SS",
+ *          "seats": 7,
+ *          "tags": ["cool", "chinese", "hot", "salad", "waffle"],
+ *          "userId": "2676a6fd-a734-4639-a5cb-1f78e03fae2c"
+ *      }, {
+ *          "id": "2676a6fd-a734-4639-a5cb-1f78e03fae2c"
+ *          "title": "Cool chinese breakfast",
+ *          "description": "I will cook some cool chinese breakfast !!!",
+ *          "location": {
+ *              "latitude": 42.5,
+ *              "longitude": 47.5
+ *          },
+ *          "format": "Breakfast",
+ *          "cuisine": "Continental chinese",
+ *          "price": 12.5,
+ *          "date": "AAAA-MM-JJ HH:MM:SS",
+ *          "seats": 7,
+ *          "tags": ["cool", "chinese", "hot", "salad", "waffle"],
+ *          "userId": "2676a6fd-a734-4639-a5cb-1f78e03fae2c"
+ *      }]
+ *
+ */
 
 router.route({
     method: 'GET',
@@ -17,26 +78,99 @@ router.route({
     handler: mealCtrl.getMeals
 });
 
+/**
+ * @api {get} /users/:userId/meals Get meals for User
+ * @apiVersion 0.1.0
+ * @apiName GetUserMeals
+ * @apiGroup Meal
+ *
+ * @apiParam {String} userId User id.
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      [{
+ *          "id": "2676a6fd-a734-4639-a5cb-1f78e03fae2c"
+ *          "title": "Cool chinese breakfast",
+ *          "description": "I will cook some cool chinese breakfast !!!",
+ *          "location": {
+ *              "latitude": 42.5,
+ *              "longitude": 47.5
+ *          },
+ *          "format": "Breakfast",
+ *          "cuisine": "Continental chinese",
+ *          "price": 12.5,
+ *          "date": "AAAA-MM-JJ HH:MM:SS",
+ *          "seats": 7,
+ *          "tags": ["cool", "chinese", "hot", "salad", "waffle"],
+ *          "userId": "2676a6fd-a734-4639-a5cb-1f78e03fae2c"
+ *      }, {
+ *          "id": "2676a6fd-a734-4639-a5cb-1f78e03fae2c"
+ *          "title": "Cool chinese breakfast",
+ *          "description": "I will cook some cool chinese breakfast !!!",
+ *          "location": {
+ *              "latitude": 42.5,
+ *              "longitude": 47.5
+ *          },
+ *          "format": "Breakfast",
+ *          "cuisine": "Continental chinese",
+ *          "price": 12.5,
+ *          "date": "AAAA-MM-JJ HH:MM:SS",
+ *          "seats": 7,
+ *          "tags": ["cool", "chinese", "hot", "salad", "waffle"],
+ *          "userId": "2676a6fd-a734-4639-a5cb-1f78e03fae2c"
+ *      }, {
+ *          "id": "2676a6fd-a734-4639-a5cb-1f78e03fae2c"
+ *          "title": "Cool chinese breakfast",
+ *          "description": "I will cook some cool chinese breakfast !!!",
+ *          "location": {
+ *              "latitude": 42.5,
+ *              "longitude": 47.5
+ *          },
+ *          "format": "Breakfast",
+ *          "cuisine": "Continental chinese",
+ *          "price": 12.5,
+ *          "date": "AAAA-MM-JJ HH:MM:SS",
+ *          "seats": 7,
+ *          "tags": ["cool", "chinese", "hot", "salad", "waffle"],
+ *          "userId": "2676a6fd-a734-4639-a5cb-1f78e03fae2c"
+ *      }]
+ *
+ */
+
 router.route({
     method: 'GET',
     path: '/users/:userId/meals',
     handler: mealCtrl.getMeals
 });
 
-router.route({
-    method: 'GET',
-    path: '/users/me/bookings',
-    handler: [
-        secuCtrl.bearerAuth,
-        mealCtrl.getUserBookings
-    ]
-});
-
-router.route({
-    method: 'GET',
-    path: '/users/:userId/booking',
-    handler: mealCtrl.getUserBookings
-});
+/**
+ * @api {get} /meals/:mealId Get meals by id
+ * @apiVersion 0.1.0
+ * @apiName GetMeal
+ * @apiGroup Meal
+ *
+ * @apiParam {String} mealId Meal id.
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "id": "2676a6fd-a734-4639-a5cb-1f78e03fae2c"
+ *          "title": "Cool chinese breakfast",
+ *          "description": "I will cook some cool chinese breakfast !!!",
+ *          "location": {
+ *              "latitude": 42.5,
+ *              "longitude": 47.5
+ *          },
+ *          "format": "Breakfast",
+ *          "cuisine": "Continental chinese",
+ *          "price": 12.5,
+ *          "date": "AAAA-MM-JJ HH:MM:SS",
+ *          "seats": 7,
+ *          "tags": ["cool", "chinese", "hot", "salad", "waffle"],
+ *          "userId": "2676a6fd-a734-4639-a5cb-1f78e03fae2c"
+ *      }
+ *
+ */
 
 router.route({
     method: 'GET',
@@ -44,12 +178,61 @@ router.route({
     handler: mealCtrl.getMeal
 });
 
-router.route({
-    method: 'GET',
-    path: '/meals/:mealId/dishes',
-    handler: mealCtrl.getDishes
-});
-
+/**
+ * @api {post} /meals Post a meal
+ * @apiVersion 0.1.0
+ * @apiName PostMeal
+ * @apiGroup Meal
+ * @apiPermission loggedIn
+ * @apiUse loggedIn
+ *
+ * @apiParam {String} title Meal title.
+ * @apiParam {String} [description] Meal description.
+ * @apiParam {Object} location Meal location.
+ * @apiParam {Number} location.latitude location latitude.
+ * @apiParam {Number} location.longitude location longitude.
+ * @apiParam {String} [format] Meal format.
+ * @apiParam {String} [cuisine] Meal cuisine.
+ * @apiParam {Number} [price] Meal price.
+ * @apiParam {String} date Meal date.
+ * @apiParam {Number} seats Meal number of seats.
+ * @apiParam {String[]} tags Meal tags array.
+ *
+ * @apiParamExample {json} Request-Example:
+ *      {
+ *          "title": "Cool chinese breakfast",
+ *          "description": "I will cook some cool chinese breakfast !!!",
+ *          "location": {
+ *              "latitude": 42.5,
+ *              "longitude": 47.5
+ *          },
+ *          "format": "Breakfast",
+ *          "cuisine": "Continental chinese",
+ *          "price": 12.5,
+ *          "date": "AAAA-MM-JJ HH:MM:SS",
+ *          "seats": 7,
+ *          "tags": ["cool", "chinese", "hot", "salad", "waffle"]
+ *      }
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 201 Created
+ *      {
+ *          "id": "2676a6fd-a734-4639-a5cb-1f78e03fae2c"
+ *          "title": "Cool chinese breakfast",
+ *          "description": "I will cook some cool chinese breakfast !!!",
+ *          "location": {
+ *              "latitude": 42.5,
+ *              "longitude": 47.5
+ *          },
+ *          "format": "Breakfast",
+ *          "cuisine": "Continental chinese",
+ *          "price": 12.5,
+ *          "date": "AAAA-MM-JJ HH:MM:SS",
+ *          "seats": 7,
+ *          "tags": ["cool", "chinese", "hot", "salad", "waffle"]
+ *      }
+ *
+ */
 router.route({
     method: 'POST',
     path: '/meals',
@@ -71,92 +254,10 @@ router.route({
         }
     },
     handler: [
-        secuCtrl.bearerAuth,
+        secCtrl.bearerAuth,
         mealCtrl.postMeal
     ]
 });
 
-router.route({
-    method: 'POST',
-    path: '/meals/:mealId/dishes',
-    validate: { type: 'json' },
-    handler: [
-        secuCtrl.bearerAuth,
-        mealCtrl.postDish
-    ]
-});
-
-router.route({
-    method: 'DELETE',
-    path: '/dishes/:dishId',
-    handler: mealCtrl.deleteDish
-});
-
-router.route({
-    method: 'POST',
-    path: '/meals/:mealId/bookings',
-    validate: { type: 'json' },
-    handler: [
-        secuCtrl.bearerAuth,
-        mealCtrl.book
-    ]
-});
-
-router.route({
-    method: 'GET',
-    path: '/meals/:mealId/bookings',
-    handler: mealCtrl.getBookings
-});
-
-router.route({
-    method: 'GET',
-    path: '/bookings/:bookingId',
-    handler: mealCtrl.getBooking
-});
-
-router.route({
-    method: 'DELETE',
-    path: '/bookings/:bookingId',
-    handler: [
-        secuCtrl.bearerAuth,
-        mealCtrl.deleteBooking
-    ]
-});
-
-router.route({
-    method: 'POST',
-    path: '/bookings/:bookingId/reviews',
-    handler: [
-        secuCtrl.bearerAuth,
-        mealCtrl.postReview
-    ]
-});
-
-router.route({
-    method: 'GET',
-    path: '/bookings/:bookingId/reviews',
-    handler: mealCtrl.getReviews
-});
-
-router.route({
-    method: 'GET',
-    path: '/meals/:mealId/reviews',
-    handler: mealCtrl.getMealReviews
-});
-
-router.route({
-    method: 'GET',
-    path: '/users/me/reviews',
-    handler: [
-        secuCtrl.bearerAuth,
-        mealCtrl.getUserReviews
-    ]
-});
-
-router.route({
-    method: 'GET',
-    path: '/users/:userId/reviews',
-    handler: mealCtrl.getUserReviews
-});
 
 module.exports = router;
