@@ -3,6 +3,8 @@
  */
 'use strict';
 
+const mealsLocation = require('../lib/meals-location');
+
 module.exports = function (sequelize, DataTypes) {
     const Meal = sequelize.define('meal', {
         id: {
@@ -16,8 +18,20 @@ module.exports = function (sequelize, DataTypes) {
         },
         description: DataTypes.TEXT,
         location: {
-            type: DataTypes.STRING,
-            allowNull: false
+            type: DataTypes.JSONB,
+            allowNull: false,
+            validate: {
+                isLocation: function isLocation(val) {
+                    if (!val || !val.latitude || !val.longitude ||
+                        val.latitude > 90.0 || val.latitude < -90.0 ||
+                        val.longitude > 180.0 || val.longitude < -180.0)
+                        throw new Error('Location wrong format');
+                },
+                set: function (val) {
+                    mealsLocation.updateLocation(val.latitude, val.longitude, this.id);
+                    this.setDataValue('location', val);
+                }
+            }
         },
         format: DataTypes.STRING,
         cuisine: DataTypes.STRING,
@@ -27,7 +41,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         },
         seats: DataTypes.INTEGER,
-        tags: DataTypes.STRING
+        tags: DataTypes.ARRAY(DataTypes.STRING)
     }, {
         classMethods: {
             associate: function (db) {

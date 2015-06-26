@@ -18,6 +18,8 @@ describe('Post a meal', function () {
     it('should work', function *(done) {
 
         let token   = yield createToken();
+        let date    = new Date();
+        date.setTime(date.getTime() + 9999);
 
         hippie(app)
             .post('/meals')
@@ -25,8 +27,12 @@ describe('Post a meal', function () {
             .json()
             .send({
                 title: 'Cool meal',
-                location: 'Cool place',
-                date: Date().toString()
+                location: {
+                    latitude: 45.658987,
+                    longitude: 75.588789
+                },
+                date: date,
+                tags: ['coucou']
             })
             .expectStatus(201)
             .end(done);

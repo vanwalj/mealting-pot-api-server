@@ -6,6 +6,7 @@
 const hippie = require('hippie');
 
 const createMeal = require('../lib/create-meal');
+const createUser = require('../lib/create-user');
 
 const models = require('../../models');
 const app = require('../../');
@@ -13,13 +14,52 @@ const app = require('../../');
 describe('Get all meals', function () {
     beforeEach(function *(done) {
         yield models.sequelize.sync({force: true});
+
         done()
     });
 
     it('should work', function *(done) {
         hippie(app)
             .get('/meals')
-            .expectStatus(204)
+            .expectStatus(200)
+            .end(done);
+    });
+
+    it('should work', function *(done) {
+
+        let user = yield createUser();
+        yield createMeal({
+            title: 'Cool indian meal',
+            location: {
+                latitude: 50.5,
+                longitude: 45.5
+            },
+            date: new Date()
+        }, user);
+        yield createMeal({
+            title: 'Cool french meal',
+            location: {
+                latitude: 50.5,
+                longitude: 45.5
+            },
+            date: new Date()
+        }, user);
+        yield createMeal({
+            title: 'Cool greek meal',
+            location: {
+                latitude: 50.5,
+                longitude: 78.5
+            },
+            date: new Date()
+        }, user);
+
+        hippie(app)
+            .get('/meals')
+            .qs({
+                latitude: 50.5,
+                longitude: 78.5
+            })
+            .expectStatus(200)
             .end(done);
     });
 

@@ -14,13 +14,16 @@ module.exports = function *createMeal(opts, user) {
     opts = opts || {
             title: 'Cool meal',
             description: 'Really cool meal',
-            location: 'yolo',
+            location: {
+                latitude: 50.25,
+                longitude: 41.2
+            },
             format: 'dinner',
             cuisine: 'french',
             price: 10,
             date: Date(),
             seats: 4,
-            tags: 'yolo cool french'
+            tags: ['yolo', 'cool', 'french']
         };
 
     if (!user) {

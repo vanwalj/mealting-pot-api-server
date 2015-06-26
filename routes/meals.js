@@ -53,7 +53,23 @@ router.route({
 router.route({
     method: 'POST',
     path: '/meals',
-    validate: { type: 'json' },
+    validate: {
+        type: 'json',
+        body: {
+            title: Joi.string().required(),
+            description: Joi.string(),
+            location: {
+                latitude: Joi.number().precision(6).min(-90).max(90).required(),
+                longitude: Joi.number().precision(6).min(-180).max(180).required()
+            },
+            format: Joi.string(),
+            cuisine: Joi.string(),
+            price: Joi.number(),
+            date: Joi.date().min('now').required(),
+            seats: Joi.number().min(1),
+            tags: Joi.array().items(Joi.string())
+        }
+    },
     handler: [
         secuCtrl.bearerAuth,
         mealCtrl.postMeal

@@ -5,26 +5,19 @@
 
 const _ = require('underscore');
 
-const models = require('../models');
-
-//todo controller refactor
+const models            = require('../models');
+const mealsLocation     = require('../lib/meals-location');
 
 module.exports.getMeals = function *getMeals(next) {
 
-    //todo refactor
-    if (this.query.geohash || ( this.query.latitude && this.query.longitude )) {
-        let geohash = this.query.geohash;
+    let where = _.extend({}, this.params);
 
-        //todo Redis && geohash
-        //if (!geohash) {
-        //    geohash = geoEncode(this.query.latitude, this.query.longitude);
-        //}
-        //
-        //let mealsId = geoFind(geohash, this.query.radius || 5000);
-        //this.body = yield models.Meal.find({ where: { id: { '$in': mealsId } } });
-    } else {
-        this.body = yield models.Meal.find({ where: this.params });
+    if (this.query.latitude && this.query.longitude) {
+        let mealsId = yield mealsLocation.nearbyAsync(this.query.latitude, this.query.longitude, this.query.radius || 5000);
+        _.extend(where, { id: { '$in': mealsId } });
     }
+
+    this.body = yield models.Meal.findAll({ where: where });
 
     yield next;
 };
@@ -43,7 +36,7 @@ module.exports.getMeal = function *getMeal(next) {
 };
 
 module.exports.getDishes = function *getDishes(next) {
-    this.body = yield models.Dish.find({ where: this.params });
+    this.body = yield models.Dish.findAll({ where: this.params });
 
     yield next;
 };
@@ -107,7 +100,7 @@ module.exports.book = function *book(next) {
 };
 
 module.exports.getBookings = function *getBookings(next) {
-    this.body = yield models.Booking.find({ where: { mealId: this.params.mealId } });
+    this.body = yield models.Booking.findAll({ where: { mealId: this.params.mealId } });
 
     yield next;
 };
@@ -120,7 +113,7 @@ module.exports.getBooking = function *getBooking(next) {
 };
 
 module.exports.getUserBookings = function *getUserBookings(next) {
-    this.body = yield models.Booking.find({ where: { userId: this.state.user ? this.state.user.id : this.params.userId } });
+    this.body = yield models.Booking.findAll({ where: { userId: this.state.user ? this.state.user.id : this.params.userId } });
 
     yield next;
 };
@@ -169,7 +162,7 @@ module.exports.postReview = function *postReview(next) {
 };
 
 module.exports.getReviews = function *getReviews(next) {
-    this.body = yield models.Reviews.find({ where: { bookingId: this.params.bookingId } });
+    this.body = yield models.Reviews.findAll({ where: { bookingId: this.params.bookingId } });
 
     yield next;
 };
@@ -177,14 +170,14 @@ module.exports.getReviews = function *getReviews(next) {
 module.exports.getUserReviews = function *getUserReview(next) {
     this.body = {};
 
-    this.body.asReviewer = yield models.Review.find({ where: { reviewerId: this.state.user ? this.state.user.id : this.params.userId } });
-    this.body.asReviewee = yield models.Review.find({ where: { revieweeId: this.state.user ? this.state.user.id : this.params.userId } });
+    this.body.asReviewer = yield models.Review.findAll({ where: { reviewerId: this.state.user ? this.state.user.id : this.params.userId } });
+    this.body.asReviewee = yield models.Review.findAll({ where: { revieweeId: this.state.user ? this.state.user.id : this.params.userId } });
 
     yield next;
 };
 
 module.exports.getMealReviews = function *getMealReview(next) {
-    this.body = yield models.Review.find({ where: { mealId: this.params.mealId } });
+    this.body = yield models.Review.findAll({ where: { mealId: this.params.mealId } });
 
     yield next;
 };

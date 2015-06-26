@@ -5,3 +5,5 @@ addons:
   postgresql: "9.4"
 before_script:
   - psql -c 'create database mealting_pot;' -U postgres
+services:
+  - redis-server
