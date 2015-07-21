@@ -18,7 +18,7 @@ module.exports.getMeals = function *getMeals(next) {
         _.extend(where, { id: { '$in': mealsId } });
     }
 
-    this.body = yield models.Meal.findAll({ where: where, include: [models.User, models.Picture] });
+    this.body = yield models.Meal.findAll({ where: where, include: this.query.include, attributes: this.query.attributes || ['id'] });
 
     yield next;
 };
@@ -36,6 +36,15 @@ module.exports.getMeal = function *getMeal(next) {
     yield next;
 };
 
+module.exports.getMealPictures = function *getMealPictures(next) {
+    var meal = yield models.Meal.findOne({ where: { id: this.params.mealId } });
+    this.assert(meal, 404);
+
+    this.body = meal.getPictures({ attributes: this.query.attributes || ['id'] });
+
+    yield next;
+};
+
 module.exports.postMeal = function *postMeal(next) {
     this.body   = yield models.Meal.create(_.extend({}, this.request.body, { userId: this.state.user.id }));
     this.status = 201;
@@ -49,7 +58,7 @@ module.exports.postMealPicture = function *postMealPicture(next) {
 
     var picture = yield models.Picture.create(this.request.body);
     yield meal.addPicture(picture);
-    var aws = yield awsLib.signFile({ name: picture.id, type: this.request.body.type });
+    var aws = yield awsLib.signPutObject({ name: picture.id, type: this.request.body.type });
 
     this.status = 201;
     this.body = {

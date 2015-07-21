@@ -33,5 +33,6 @@ module.exports = [
     require('./jwt').middleware(),
     require('./meals').middleware(),
     require('./reviews').middleware(),
-    require('./users').middleware()
+    require('./users').middleware(),
+    require('./pictures').middleware()
 ];

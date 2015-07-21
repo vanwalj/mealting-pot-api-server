@@ -13,3 +13,6 @@ ENV:
         S3_BUCKET: S3 Bucket name
     Optional:
         NODE_DEBUG
+        S3_ENDPOINT
+        S3_SSL_ENABLED
+        S3_FORCE_PATH_STYLE

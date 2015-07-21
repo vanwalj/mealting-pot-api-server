@@ -3,6 +3,8 @@
  */
 'use strict';
 
+var awsLib = require('../lib/aws');
+
 module.exports = function (sequelize, DataTypes) {
     const Picture = sequelize.define('picture', {
         id: {
@@ -15,7 +17,7 @@ module.exports = function (sequelize, DataTypes) {
         url: {
             type: DataTypes.VIRTUAL,
             get: function () {
-                return "https://" + process.env.S3_BUCKET + ".s3.amazonaws.com/" + this.id;
+                return awsLib.signGetObject({ name: this.id });
             }
         }
     });

@@ -6,6 +6,7 @@
 const _ = require('underscore');
 
 const models    = require('../models');
+const awsLib    = require('../lib/aws');
 
 module.exports.register = function *register(next) {
     try {
@@ -64,7 +65,7 @@ module.exports.update = function *update(next) {
 module.exports.postUserPicture = function *postUserPicture(next) {
     var picture = yield models.Picture.create(this.request.body);
     yield this.state.user.setPicture(picture);
-    var aws = yield awsLib.signFile({ name: picture.id, type: this.request.body.type });
+    var aws = yield awsLib.signPutObject({ name: picture.id, type: this.request.body.type });
 
     this.status = 201;
     this.body = {
