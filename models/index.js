@@ -16,7 +16,8 @@ var db = {
     Meal: sequelize.import('./meal'),
     Dish: sequelize.import('./dish'),
     Booking: sequelize.import('./booking'),
-    Review: sequelize.import('./review')
+    Review: sequelize.import('./review'),
+    Picture: sequelize.import('./picture')
 };
 
 Object.keys(db).forEach(function (modelName) {

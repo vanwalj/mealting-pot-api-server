@@ -41,13 +41,17 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         },
         seats: DataTypes.INTEGER,
-        tags: DataTypes.ARRAY(DataTypes.STRING)
+        tags: {
+            type: DataTypes.ARRAY(DataTypes.STRING),
+            defaultValue: []
+        }
     }, {
         classMethods: {
             associate: function (db) {
                 Meal.hasMany(db.Dish);
                 Meal.belongsTo(db.User);
                 Meal.hasMany(db.Booking);
+                Meal.hasMany(db.Picture);
             }
         }
     });

@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/vanwalj/mealting-pot-api-server#readme",
   "dependencies": {
+    "aws-sdk": "^2.1.39",
     "bcrypt": "^0.8.3",
     "bluebird": "^2.9.27",
     "co": "^4.5.4",

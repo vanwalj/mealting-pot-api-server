@@ -38,6 +38,7 @@ module.exports = function (sequelize, DataTypes) {
         classMethods: {
             associate: function (db) {
                 User.hasMany(db.Meal);
+                User.hasOne(db.Picture);
             }
         },
         instanceMethods: {

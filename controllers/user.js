@@ -61,26 +61,24 @@ module.exports.update = function *update(next) {
     yield next;
 };
 
-module.exports.destroy = function *destroy(next) {
-    yield this.state.user.destroy();
+module.exports.postUserPicture = function *postUserPicture(next) {
+    var picture = yield models.Picture.create(this.request.body);
+    yield this.state.user.setPicture(picture);
+    var aws = yield awsLib.signFile({ name: picture.id, type: this.request.body.type });
 
-    this.status = 204;
-
-    yield next;
-};
-
-module.exports.validateEmailAvailability = function *validateEmailAvailability(next) {
-    var result = yield models.User.findOne({ where: { email: this.request.body.email } });
-
+    this.status = 201;
     this.body = {
-        result: !result
+        picture: picture,
+        aws: aws
     };
 
     yield next;
 };
 
-module.exports.validatePassword = function *validatePassword(next) {
-    this.body.result = true;
+module.exports.destroy = function *destroy(next) {
+    yield this.state.user.destroy();
+
+    this.status = 204;
 
     yield next;
 };

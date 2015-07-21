@@ -7,6 +7,7 @@ const _ = require('underscore');
 
 const models            = require('../models');
 const mealsLocation     = require('../lib/meals-location');
+const awsLib            = require('../lib/aws');
 
 module.exports.getMeals = function *getMeals(next) {
 
@@ -17,7 +18,7 @@ module.exports.getMeals = function *getMeals(next) {
         _.extend(where, { id: { '$in': mealsId } });
     }
 
-    this.body = yield models.Meal.findAll({ where: where });
+    this.body = yield models.Meal.findAll({ where: where, include: [models.User, models.Picture] });
 
     yield next;
 };
@@ -38,6 +39,23 @@ module.exports.getMeal = function *getMeal(next) {
 module.exports.postMeal = function *postMeal(next) {
     this.body   = yield models.Meal.create(_.extend({}, this.request.body, { userId: this.state.user.id }));
     this.status = 201;
+
+    yield next;
+};
+
+module.exports.postMealPicture = function *postMealPicture(next) {
+    var meal = yield models.Meal.findOne({ where: { id: this.params.mealId } });
+    this.assert(meal.userId === this.state.user.id, 401);
+
+    var picture = yield models.Picture.create(this.request.body);
+    yield meal.addPicture(picture);
+    var aws = yield awsLib.signFile({ name: picture.id, type: this.request.body.type });
+
+    this.status = 201;
+    this.body = {
+        picture: picture,
+        aws: aws
+    };
 
     yield next;
 };

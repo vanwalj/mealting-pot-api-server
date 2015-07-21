@@ -78,34 +78,6 @@ router.route({
     ]
 });
 
-router.route({
-    method: 'POST',
-    path: '/users/validate/email-availability',
-    validate: {
-        type: 'json',
-        body: {
-            email: Joi.string().email().required()
-        }
-    },
-    handler: [
-        userController.validateEmailAvailability
-    ]
-});
-
-router.route({
-    method: 'POST',
-    path: '/users/validate/password',
-    validate: {
-        type: 'json',
-        body: {
-            password: Joi.string().required()
-        }
-    },
-    handler: [
-        userController.validatePassword
-    ]
-});
-
 /**
  * @api {post} /users Register a new user
  * @apiVersion 0.1.0
@@ -194,6 +166,18 @@ router.route({
     handler: [
         securityController.bearerAuth,
         userController.update
+    ]
+});
+
+router.route({
+    method: 'POST',
+    path: '/users/me/picture',
+    validate: {
+        type: 'json'
+    },
+    handler: [
+        securityController.bearerAuth,
+        userController.postUserPicture
     ]
 });
 

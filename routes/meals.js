@@ -179,6 +179,32 @@ router.route({
 });
 
 /**
+ * @api {post} /meals/:mealId/pictures Post a picture for a meal
+ * @apiVersion 0.1.0
+ * @apiName PostMealPicture
+ * @apiGroup Meal
+ *
+ * @apiParam {String} mealId Meal id.
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *
+ *      }
+ *
+ */
+
+router.route({
+    method: 'POST',
+    path: '/meals/:mealId/pictures',
+    validate: { type: 'json' },
+    handler: [
+        secCtrl.bearerAuth,
+        mealCtrl.postMealPicture
+    ]
+});
+
+/**
  * @api {post} /meals Post a meal
  * @apiVersion 0.1.0
  * @apiName PostMeal
@@ -241,10 +267,10 @@ router.route({
         body: {
             title: Joi.string().required(),
             description: Joi.string(),
-            location: {
+            location: Joi.object().keys({
                 latitude: Joi.number().precision(6).min(-90).max(90).required(),
                 longitude: Joi.number().precision(6).min(-180).max(180).required()
-            },
+            }).required(),
             format: Joi.string(),
             cuisine: Joi.string(),
             price: Joi.number(),
