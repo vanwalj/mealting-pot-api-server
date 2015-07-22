@@ -204,6 +204,12 @@ router.route({
     ]
 });
 
+router.route({
+    method: 'GET',
+    path: '/meals/:mealId/pictures',
+    handler: mealCtrl.getMealPictures
+});
+
 /**
  * @api {post} /meals Post a meal
  * @apiVersion 0.1.0
@@ -284,6 +290,5 @@ router.route({
         mealCtrl.postMeal
     ]
 });
-
 
 module.exports = router;

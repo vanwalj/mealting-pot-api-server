@@ -7,6 +7,7 @@ module.exports = function (sequelize, DataTypes) {
     const Booking = sequelize.define('booking', {
         id: {
             type: DataTypes.UUID,
+            primaryKey: true,
             defaultValue: DataTypes.UUIDV4,
             set: () => undefined
         },

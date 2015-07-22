@@ -9,6 +9,7 @@ module.exports = function (sequelize, DataTypes) {
     const Picture = sequelize.define('picture', {
         id: {
             type: DataTypes.UUID,
+            primaryKey: true,
             defaultValue: DataTypes.UUIDV4,
             set: () => undefined
         },

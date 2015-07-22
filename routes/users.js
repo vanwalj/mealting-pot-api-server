@@ -73,7 +73,6 @@ router.route({
         }
     },
     handler: [
-        securityController.bearerAuth,
         userController.getUser
     ]
 });

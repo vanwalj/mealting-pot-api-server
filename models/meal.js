@@ -9,6 +9,7 @@ module.exports = function (sequelize, DataTypes) {
     const Meal = sequelize.define('meal', {
         id: {
             type: DataTypes.UUID,
+            primaryKey: true,
             defaultValue: DataTypes.UUIDV4,
             set: () => undefined
         },
