@@ -45,11 +45,11 @@ module.exports = function (sequelize, DataTypes) {
         tags: {
             type: DataTypes.ARRAY(DataTypes.STRING),
             defaultValue: []
-        }
+        },
+        dishes: DataTypes.JSONB
     }, {
         classMethods: {
             associate: function (db) {
-                Meal.hasMany(db.Dish);
                 Meal.belongsTo(db.User);
                 Meal.hasMany(db.Booking);
                 Meal.hasMany(db.Picture);
