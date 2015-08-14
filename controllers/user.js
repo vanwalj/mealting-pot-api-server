@@ -31,6 +31,12 @@ module.exports.getMe = function *getMe(next) {
 };
 
 module.exports.getUser = function *getUser(next) {
+
+    let include = [];
+    if (this.query.include && this.query.include["picture"]) {
+        include.push(models.Picture)
+    }
+
     let user = yield models.User.findOne({
         where: { id: this.params.userId },
         attributes: ['id', 'firstName']

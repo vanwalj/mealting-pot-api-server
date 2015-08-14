@@ -121,7 +121,7 @@ router.route({
 });
 
 /**
- * @api {put} /users/me Edit user informations
+ * @api {put} /users/me Edit user
  * @apiVersion 0.1.0
  * @apiName PutUser
  * @apiGroup User

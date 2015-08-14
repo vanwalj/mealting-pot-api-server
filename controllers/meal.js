@@ -18,7 +18,12 @@ module.exports.getMeals = function *getMeals(next) {
         _.extend(where, { id: { '$in': mealsId } });
     }
 
-    this.body = yield models.Meal.findAll({ where: where, include: this.query.include, attributes: this.query.attributes || ['id'] });
+    let include = [];
+    if (this.query.include && this.query.include["user"]) {
+        include.push(models.User)
+    }
+
+    this.body = yield models.Meal.findAll({ where: where, include: include, attributes: this.query.attributes || ['id'] });
 
     yield next;
 };
