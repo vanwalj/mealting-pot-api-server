@@ -14,7 +14,6 @@ const sequelize = new Sequelize(process.env.PG_URI, {
 var db = {
     User: sequelize.import('./user'),
     Meal: sequelize.import('./meal'),
-    Dish: sequelize.import('./dish'),
     Booking: sequelize.import('./booking'),
     Review: sequelize.import('./review'),
     Picture: sequelize.import('./picture')
