@@ -7,7 +7,7 @@ const models    = require('../models');
 const app       = require('../');
 
 co(function *() {
-    yield models.sequelize.sync();
+    yield models.sequelize.sync({ force: true });
     app.listen(process.env.PORT);
     debugLog.http('Listening on', process.env.PORT);
 })
