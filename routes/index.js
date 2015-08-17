@@ -29,7 +29,6 @@
 
 module.exports = [
     require('./bookings').middleware(),
-    require('./dishes').middleware(),
     require('./jwt').middleware(),
     require('./meals').middleware(),
     require('./reviews').middleware(),
