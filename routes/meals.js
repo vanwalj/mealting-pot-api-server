@@ -102,6 +102,13 @@ router.route({
  *          "date": "AAAA-MM-JJ HH:MM:SS",
  *          "seats": 7,
  *          "tags": ["cool", "chinese", "hot", "salad", "waffle"],
+ *          "dishes": [
+ *              {
+ *                  "type": "main",
+ *                  "name": "Nouilles",
+ *                  "description": "Des nouilles, ok."
+ *              }
+ *          ],
  *          "userId": "2676a6fd-a734-4639-a5cb-1f78e03fae2c"
  *      }, {
  *          "id": "2676a6fd-a734-4639-a5cb-1f78e03fae2c"
@@ -117,6 +124,13 @@ router.route({
  *          "date": "AAAA-MM-JJ HH:MM:SS",
  *          "seats": 7,
  *          "tags": ["cool", "chinese", "hot", "salad", "waffle"],
+ *          "dishes": [
+ *              {
+ *                  "type": "main",
+ *                  "name": "Nouilles",
+ *                  "description": "Des nouilles, ok."
+ *              }
+ *          ],
  *          "userId": "2676a6fd-a734-4639-a5cb-1f78e03fae2c"
  *      }, {
  *          "id": "2676a6fd-a734-4639-a5cb-1f78e03fae2c"
@@ -167,6 +181,13 @@ router.route({
  *          "date": "AAAA-MM-JJ HH:MM:SS",
  *          "seats": 7,
  *          "tags": ["cool", "chinese", "hot", "salad", "waffle"],
+ *          "dishes": [
+ *              {
+ *                  "type": "main",
+ *                  "name": "Nouilles",
+ *                  "description": "Des nouilles, ok."
+ *              }
+ *          ],
  *          "userId": "2676a6fd-a734-4639-a5cb-1f78e03fae2c"
  *      }
  *
@@ -229,6 +250,10 @@ router.route({
  * @apiParam {String} date Meal date.
  * @apiParam {Number} seats Meal number of seats.
  * @apiParam {String[]} tags Meal tags array.
+ * @apiParam {Object[]} dishes An array of dishes
+ * @apiParam {String} dishes[].type Dish type
+ * @apiParam {String} dishes[].name Dish name
+ * @apiParam {String} dishes[].description Dish description
  *
  * @apiParamExample {json} Request-Example:
  *      {
@@ -244,6 +269,13 @@ router.route({
  *          "date": "AAAA-MM-JJ HH:MM:SS",
  *          "seats": 7,
  *          "tags": ["cool", "chinese", "hot", "salad", "waffle"]
+ *          "dishes": [
+ *              {
+ *                  "type": "main",
+ *                  "name": "Nouilles",
+ *                  "description": "Des nouilles, ok."
+ *              }
+ *          ]
  *      }
  *
  * @apiSuccessExample Success-Response:
@@ -261,7 +293,14 @@ router.route({
  *          "price": 12.5,
  *          "date": "AAAA-MM-JJ HH:MM:SS",
  *          "seats": 7,
- *          "tags": ["cool", "chinese", "hot", "salad", "waffle"]
+ *          "tags": ["cool", "chinese", "hot", "salad", "waffle"],
+ *          "dishes": [
+ *              {
+ *                  "type": "main",
+ *                  "name": "Nouilles",
+ *                  "description": "Des nouilles, ok."
+ *              }
+ *          ]
  *      }
  *
  */
@@ -282,7 +321,12 @@ router.route({
             price: Joi.number(),
             date: Joi.date().min('now').required(),
             seats: Joi.number().min(1),
-            tags: Joi.array().items(Joi.string())
+            tags: Joi.array().items(Joi.string()),
+            dishes: Joi.array().items(Joi.object().keys({
+                type: Joi.string(),
+                name: Joi.string(),
+                description: Joi.string()
+            }))
         }
     },
     handler: [
