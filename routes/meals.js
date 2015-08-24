@@ -206,11 +206,20 @@ router.route({
  * @apiGroup Meal
  *
  * @apiParam {String} mealId Meal id.
+ * @apiParam {String} name File name.
+ * @apiParam {String} type File type (img/jpg for example)
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *
+ *          picture: {
+ *              "id": "blabla",
+ *              "name": "picture",
+ *              "url": "https://aws.s3.downloadurl.com/blabla"
+ *          },
+ *          aws: {
+ *              signed_request: "https://aws.s3.uploadurl.com/blabla"
+ *          }
  *      }
  *
  */
@@ -218,12 +227,46 @@ router.route({
 router.route({
     method: 'POST',
     path: '/meals/:mealId/pictures',
-    validate: { type: 'json' },
+    validate: {
+        type: 'json',
+        body: {
+            name: Joi.string(),
+            type: Joi.string().required()
+        }
+    },
     handler: [
         secCtrl.bearerAuth,
         mealCtrl.postMealPicture
     ]
 });
+
+/**
+ * @api {get} /meals/:mealId/pictures Get pictures for a meal
+ * @apiVersion 0.1.0
+ * @apiName PostMealPicture
+ * @apiGroup Meal
+ *
+ * @apiParam {String} mealId Meal id.
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          [{
+ *              id: "blabla",
+ *              "name": "picture",
+ *              "url": "https://aws.s3.downloadurl.com/blabla"
+ *          },{
+ *              id: "blabla",
+ *              "name": "picture",
+ *              "url": "https://aws.s3.downloadurl.com/blabla"
+ *          },{
+ *              id: "blabla",
+ *              "name": "picture",
+ *              "url": "https://aws.s3.downloadurl.com/blabla"
+ *          }]
+ *      }
+ *
+ */
 
 router.route({
     method: 'GET',

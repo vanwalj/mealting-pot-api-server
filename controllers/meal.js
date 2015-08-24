@@ -45,7 +45,7 @@ module.exports.getMealPictures = function *getMealPictures(next) {
     var meal = yield models.Meal.findOne({ where: { id: this.params.mealId } });
     this.assert(meal, 404);
 
-    this.body = yield meal.getPictures({ attributes: this.query.attributes || ['id'] });
+    this.body = yield meal.getPictures();
 
     yield next;
 };

@@ -25,21 +25,23 @@ module.exports.register = function *register(next) {
 
 module.exports.getMe = function *getMe(next) {
 
-    this.body = this.state.user.get();
+    let user = yield models.User.findOne({
+        where: { id: this.state.user.id },
+        include: [models.Picture]
+    });
+
+    this.assert(user, 404, 'User not found');
+
+    this.body = user.get();
 
     yield next;
 };
 
 module.exports.getUser = function *getUser(next) {
 
-    let include = [];
-    if (this.query.include && this.query.include["picture"]) {
-        include.push(models.Picture)
-    }
-
     let user = yield models.User.findOne({
         where: { id: this.params.userId },
-        attributes: ['id', 'firstName']
+        include: [models.Picture]
     });
 
     this.assert(user, 404, 'User not found');

@@ -25,13 +25,22 @@ const router    = Router();
  * @apiSuccess (200) {String} firstName User first name.
  * @apiSuccess (200) {String} lastName User last name.
  * @apiSuccess (200) {String} email User email.
+ * @apiSuccess (200) {Object} picture User picture
+ * @apiSuccess (200) {String} picture.id picture id
+ * @apiSuccess (200) {String} picture.name picture name
+ * @apiSuccess (200) {String} picture.url picture download url
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *          "id": "2676a6fd-a734-4639-a5cb-1f78e03fae2c",
  *          "firstName": "Marc"
  *          "firstName": "Dutroux"
- *          "email": "marc.dutroux@gmail.com"
+ *          "email": "marc.dutroux@gmail.com",
+ *          "picture": {
+ *              "id": "321312312",
+ *              "name": "laul",
+ *              "url": "https://downloadurl.com"
+ *          }
  *      }
  *
  * @apiError (404) NotFound User with the requested id not found.
@@ -55,11 +64,20 @@ router.route({
  *
  * @apiSuccess (200) {String} id id of the User.
  * @apiSuccess (200) {String} firstName User first name.
+ * @apiSuccess (200) {Object} picture User picture
+ * @apiSuccess (200) {String} picture.id picture id
+ * @apiSuccess (200) {String} picture.name picture name
+ * @apiSuccess (200) {String} picture.url picture download url
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *          "id": "2676a6fd-a734-4639-a5cb-1f78e03fae2c",
- *          "firstName": "Marc"
+ *          "firstName": "Marc",
+ *          "picture": {
+ *              "id": "321312312",
+ *              "name": "laul",
+ *              "url": "https://downloadurl.com"
+ *          }
  *      }
  *
  * @apiError (404) NotFound User with the requested id not found.
@@ -165,6 +183,38 @@ router.route({
         userController.update
     ]
 });
+
+/**
+ * @api {post} /users/me/picture Post user picture
+ * @apiVersion 0.1.0
+ * @apiName PostUserPicture
+ * @apiGroup User
+ * @apiPermission loggedIn
+ * @apiUse loggedIn
+ *
+ * @apiParam {String} name picture name.
+ * @apiParam {String} type picture type.
+ *
+ * @apiParamExample {json} Request-Example:
+ *      {
+ *          "name": "User picture",
+ *          "type": "img/png"
+ *      }
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          picture: {
+ *              "id": "blabla",
+ *              "name": "picture",
+ *              "url": "https://aws.s3.downloadurl.com/blabla"
+ *          },
+ *          aws: {
+ *              signed_request: "https://aws.s3.uploadurl.com/blabla"
+ *          }
+ *      }
+ *
+ */
 
 router.route({
     method: 'POST',
