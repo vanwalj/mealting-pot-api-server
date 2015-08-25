@@ -13,7 +13,7 @@ module.exports.book = function *book(next) {
 
     try {
         let requestedSeats = this.request.body.seats || 1;
-        let meal = yield models.Meal.findOne(this.params.mealId, { transaction: transaction });
+        let meal = yield models.Meal.findById(this.params.mealId, { transaction: transaction });
         let reservedSeats = yield models.Booking.sum('seats', { where: { mealId: this.params.mealId }, transaction: transaction });
         let remainingSeats = meal.seats - reservedSeats;
 
