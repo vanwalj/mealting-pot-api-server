@@ -18,12 +18,10 @@ module.exports.getMeals = function *getMeals(next) {
         _.extend(where, { id: { '$in': mealsId } });
     }
 
-    let include = [];
-    if (this.query.include && this.query.include["user"]) {
-        include.push(models.User)
-    }
-
-    this.body = yield models.Meal.findAll({ where: where, include: include, attributes: this.query.attributes || ['id'] });
+    this.body = yield models.Meal.findAll({
+        where: where,
+        include: [models.User, { model: models.Booking, include: [models.User] }]
+    });
 
     yield next;
 };
@@ -33,7 +31,10 @@ module.exports.getMeal = function *getMeal(next) {
     //this.body = yield models.Meal.findOne(this.params.mealId);
 
     try {
-        this.body = yield models.Meal.findOne({ where: { id: this.params.mealId } });
+        this.body = yield models.Meal.findOne({
+            where: { id: this.params.mealId },
+            include: [models.User, { model: models.Booking, include: [models.User] }]
+        });
     } catch (e) {
         this.assert(e.name !== 'SequelizeDatabaseError', 404);
         throw e;

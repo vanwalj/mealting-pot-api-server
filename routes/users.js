@@ -150,7 +150,9 @@ router.route({
  * @apiParamExample {json} Request-Example:
  *      {
  *          "email": "john@doe.com",
- *          "password": "really secured"
+ *          "password": "really secured",
+ *          "firstName": "name",
+ *          "lastName": "name"
  *      }
  *
  * @apiSuccess (200) {String} id id of the User.
