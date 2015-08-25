@@ -13,11 +13,18 @@ module.exports.book = function *book(next) {
 
     try {
         let requestedSeats = this.request.body.seats || 1;
-        let meal = yield models.Meal.findById(this.params.mealId, { transaction: transaction });
+        let meal = yield models.Meal.findOne({ where: { id: this.params.mealId } }, { transaction: transaction });
+        this.assert(meal, 404, 'Meal not found');
+
         let reservedSeats = yield models.Booking.sum('seats', { where: { mealId: this.params.mealId }, transaction: transaction });
         let remainingSeats = meal.seats - reservedSeats;
 
-        this.assert(remainingSeats <= requestedSeats, 400, 'Not enough remaining seat');
+        console.log('Seats', meal.seats);
+        console.log('Reserved', reservedSeats);
+        console.log('Remaining', remainingSeats);
+        console.log('Requested', requestedSeats);
+
+        this.assert(remainingSeats >= requestedSeats, 400, 'Not enough remaining seat');
 
         this.body   = yield models.Booking.create(_.extend({}, {
             seats: requestedSeats
