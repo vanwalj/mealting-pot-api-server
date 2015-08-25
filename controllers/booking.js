@@ -65,5 +65,6 @@ module.exports.getUserBookings = function *getUserBookings(next) {
 module.exports.deleteBooking = function *deleteBooking(next) {
     yield models.Booking.destroy({ where: { id: this.params.mealId, userId: this.state.user.id } });
 
+    this.status = 204;
     yield next;
 };
