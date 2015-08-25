@@ -16,7 +16,7 @@ module.exports.book = function *book(next) {
         let meal = yield models.Meal.findOne({ where: { id: this.params.mealId } }, { transaction: transaction });
         this.assert(meal, 404, 'Meal not found');
 
-        const bookings = yield models.Booking.find({ where: { mealId: this.params.mealId }, transaction: transaction });
+        const bookings = yield models.Booking.find({ where: { mealId: this.params.mealId }}, { transaction: transaction  });
         let reservedSeats = bookings.length;
         let remainingSeats = meal.seats - reservedSeats;
 
