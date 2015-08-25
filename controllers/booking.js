@@ -17,7 +17,7 @@ module.exports.book = function *book(next) {
         this.assert(meal, 404, 'Meal not found');
 
         let reservedSeats = yield models.Booking.sum('seats', { where: { mealId: this.params.mealId }});
-        let remainingSeats = meal.seats - reservedSeats;
+        let remainingSeats = meal.seats - _.isNaN(reservedSeats) ? 0 : reservedSeats;
 
         console.log('Seats', meal.seats);
         console.log('Reserved', reservedSeats);
