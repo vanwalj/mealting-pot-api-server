@@ -17,7 +17,7 @@ module.exports.book = function *book(next) {
         let reservedSeats = yield models.Booking.sum('seats', { where: { mealId: this.params.mealId }, transaction: transaction });
         let remainingSeats = meal.seats - reservedSeats;
 
-        this.assert(remainingSeats >= requestedSeats, 400, 'Not enough remaining seat');
+        this.assert(remainingSeats <= requestedSeats, 400, 'Not enough remaining seat');
 
         this.body   = yield models.Booking.create(_.extend({}, {
             seats: requestedSeats
