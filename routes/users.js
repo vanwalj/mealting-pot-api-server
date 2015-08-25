@@ -22,8 +22,8 @@ const router    = Router();
  * @apiParam {String} id User unique id.
  *
  * @apiSuccess (200) {String} id id of the User.
- * @apiSuccess (200) {String} firstName User first name.
- * @apiSuccess (200) {String} lastName User last name.
+ * @apiSuccess (200) {String} username User first name.
+ * @apiSuccess (200) {String} bio User last name.
  * @apiSuccess (200) {String} email User email.
  * @apiSuccess (200) {Object} picture User picture
  * @apiSuccess (200) {String} picture.id picture id
@@ -33,8 +33,8 @@ const router    = Router();
  *      HTTP/1.1 200 OK
  *      {
  *          "id": "2676a6fd-a734-4639-a5cb-1f78e03fae2c",
- *          "firstName": "Marc"
- *          "firstName": "Dutroux"
+ *          "username": "Marc"
+ *          "bio": "Dutroux"
  *          "email": "marc.dutroux@gmail.com",
  *          "picture": {
  *              "id": "321312312",
@@ -72,7 +72,8 @@ router.route({
  *      HTTP/1.1 200 OK
  *      {
  *          "id": "2676a6fd-a734-4639-a5cb-1f78e03fae2c",
- *          "firstName": "Marc",
+ *          "username": "Marc"
+ *          "bio": "Dutroux"
  *          "picture": {
  *              "id": "321312312",
  *              "name": "laul",
@@ -103,6 +104,8 @@ router.route({
  *
  * @apiParam {String} email User email, must be a valid email or will throw a 400.
  * @apiParam {String{6..}} password User password, must be at least 6 character long.
+ * @apiParam {String{6..}} username
+ * @apiParam {String{6..}} bio
  *
  * @apiParamExample {json} Request-Example:
  *      {
@@ -130,7 +133,9 @@ router.route({
         type: 'json',
         body: {
             email: Joi.string().email().required(),
-            password: Joi.string().min(6).required()
+            password: Joi.string().min(6).required(),
+            username: Joi.string(),
+            bio: Joi.string()
         }
     },
     handler: userController.register
@@ -146,13 +151,15 @@ router.route({
  *
  * @apiParam {String} email User email, must be a valid email or will throw a 400.
  * @apiParam {String{6..}} password User password, must be at least 6 character long.
+ * @apiParam {String{6..}} username
+ * @apiParam {String{6..}} bio
  *
  * @apiParamExample {json} Request-Example:
  *      {
  *          "email": "john@doe.com",
  *          "password": "really secured",
- *          "firstName": "name",
- *          "lastName": "name"
+ *          "username": "name",
+ *          "bio": "name"
  *      }
  *
  * @apiSuccess (200) {String} id id of the User.
@@ -162,7 +169,9 @@ router.route({
  *      HTTP/1.1 201 Created
  *      {
  *          "id": "2676a6fd-a734-4639-a5cb-1f78e03fae2c",
- *          "email": "john@doe.com"
+ *          "email": "john@doe.com",
+ *          "username": "name",
+ *          "bio": "name"
  *      }
  *
  * @apiError (400) BadRequest Client error, more details within the response body.
@@ -176,8 +185,8 @@ router.route({
         body: {
             email: Joi.string().email(),
             password: Joi.string().min(6),
-            firstName: Joi.string(),
-            lastName: Joi.string()
+            username: Joi.string(),
+            bio: Joi.string()
         }
     },
     handler: [

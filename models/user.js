@@ -28,10 +28,10 @@ module.exports = function (sequelize, DataTypes) {
                 this.setDataValue('password', bcrypt.hashSync(v, 12));
             }
         },
-        firstName: {
+        username: {
             type: DataTypes.STRING
         },
-        lastName: {
+        bio: {
             type: DataTypes.STRING
         }
     }, {
